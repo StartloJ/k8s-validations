@@ -1,0 +1,26 @@
+resources:
+  - ../../base
+  - ingress-config.yaml
+  - deployment-config.yaml
+  - secret.yaml
+replacements:
+  - source:
+      kind: ConfigMap
+      name: demo-a-fake-api-ingress-config
+      fieldPath: data.host
+    targets:
+      - select:
+          kind: Ingress
+          name: demo-a-fake-api-ingress
+        fieldPaths:
+          - spec.rules.0.host
+  - source:
+      kind: ConfigMap
+      name: demo-a-fake-api-deployment-config
+      fieldPath: data.image
+    targets:
+      - select:
+          kind: Deployment
+          name: demo-a-fake-api
+        fieldPaths:
+          - spec.template.spec.containers.0.image

@@ -1,0 +1,7 @@
+# This is dummy file just for keeping replacements data
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-a-fake-api-deployment-config
+data:
+  image: dem:a-fake-api-v1.0.0

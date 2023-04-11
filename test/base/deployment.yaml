@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-a-fake-api
+  namespace: demo-a-app
+  labels:
+    app: demo-a-fake-api
+    sg-used: a-app-01
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-a-fake-api
+  template:
+    metadata:
+      labels:
+        app: demo-a-fake-api
+        sg-used: a-app-01
+    spec:
+      containers:
+        - name: demo-a-fake-api
+          image: dem:a-fake-api-latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: "250m"
+            limits:
+              memory: "500Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+              name: web-port
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /a-fake-api/actuator/health
+              port: web-port
+              scheme: HTTP
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /a-fake-api/actuator/health
+              port: web-port
+              scheme: HTTP
+            failureThreshold: 3
+            initialDelaySeconds: 25
+            periodSeconds: 25
+            timeoutSeconds: 25
+          startupProbe:
+            httpGet:
+              path: /a-fake-api/actuator/health
+              port: web-port
+            failureThreshold: 3
+            initialDelaySeconds: 25
+            periodSeconds: 25
+            timeoutSeconds: 25
+          envFrom:
+            - secretRef:
+                name: a-fake-api-secret
+      imagePullSecrets: []

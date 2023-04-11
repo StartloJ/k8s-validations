@@ -1,0 +1,14 @@
+resources:
+  - ../../base
+  - deployment-config.yaml
+replacements:
+  - source:
+      kind: ConfigMap
+      name: demo-a-fake-api-deployment-config
+      fieldPath: data.image
+    targets:
+      - select:
+          kind: Deployment
+          name: demo-a-fake-api
+        fieldPaths:
+          - spec.template.spec.containers.0.image
