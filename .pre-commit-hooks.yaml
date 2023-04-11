@@ -1,0 +1,8 @@
+# .pre-commit-hooks.yaml
+- id: k8s-validations
+  name: k8s-validations (via docker)
+  description: kustomize and k8s-validations pkg via docker
+  entry: /verify.sh
+  language: docker
+  always_run: true
+  pass_filenames: false
