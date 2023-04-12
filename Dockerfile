@@ -4,7 +4,7 @@ ENV kustomize_version="v5.0.1"
 ENV PYTHONUNBUFFERED=1
 
 # Install python3 block
-RUN apk add --update --no-cache python3 curl \
+RUN apk add --update --no-cache python3 curl bash \
     && ln -sf python3 /usr/bin/python \
     && python3 -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools kubernetes-validate

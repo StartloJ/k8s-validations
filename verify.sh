@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/bash
 kus_path='/src'
 overlays=$(ls ${kus_path}/overlays)
 
@@ -12,5 +12,8 @@ do
     kubernetes-validate --strict ${MANIFEST_FILE} 2>/dev/null | \
         grep -v ^INFO && { echo "error during kubernetes-validate ${MANIFEST_FILE}"; exit 2; }
     
+    # cleaning temp file
+    rm -f ${MANIFEST_FILE}
+
     echo "kustomize config for overlays/$overlay - ok"
 done
